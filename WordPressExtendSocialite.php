@@ -1,18 +1,13 @@
 <?php
 
-namespace SocialiteProviders\WordPress;
+namespace CaesarDev\SocialiteProviderWordPressCustomEndpoint;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class WordPressExtendSocialite
 {
-    /**
-     * Register the provider.
-     *
-     * @param \SocialiteProviders\Manager\SocialiteWasCalled $socialiteWasCalled
-     */
     public function handle(SocialiteWasCalled $socialiteWasCalled)
     {
-        $socialiteWasCalled->extendSocialite('wordpress', Provider::class);
+        $socialiteWasCalled->extendSocialite('wordpress', __NAMESPACE__.'\Provider');
     }
 }

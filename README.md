@@ -1,7 +1,8 @@
-# WordPress
+# WordPressCustomEndpoint
+We use it for https://wp-oauth.com/ (I think so at least)
 
 ```bash
-composer require socialiteproviders/wordpress
+composer require CaesarDev/SocialiteProviderWordPressCustomEndpoint
 ```
 
 ## Installation & Basic Usage
@@ -11,10 +12,12 @@ Please see the [Base Installation Guide](https://socialiteproviders.com/usage/),
 ### Add configuration to `config/services.php`
 
 ```php
-'wordpress' => [    
-  'client_id' => env('WORDPRESS_CLIENT_ID'),  
-  'client_secret' => env('WORDPRESS_CLIENT_SECRET'),  
-  'redirect' => env('WORDPRESS_REDIRECT_URI') 
+'wordpress' => [
+    'client_id' => env('WORDPRESS_KEY'),
+    'client_secret' => env('WORDPRESS_SECRET'),
+    'redirect' => env('WORDPRESS_REDIRECT_URI'),  
+    'api_top_endpoint' => env('WORDPRESS_API_TOP_ENDPOINT'),
+    'api_endpoint' => env('WORDPRESS_API_ENDPOINT'),
 ],
 ```
 
@@ -28,7 +31,7 @@ Add the event to your `listen[]` array in `app/Providers/EventServiceProvider`. 
 protected $listen = [
     \SocialiteProviders\Manager\SocialiteWasCalled::class => [
         // ... other providers
-        'SocialiteProviders\\WordPress\\WordPressExtendSocialite@handle',
+        'CaesarDev\\SocialiteProviderWordPressCustomEndpoint\\WordPressExtendSocialite@handle',
     ],
 ];
 ```

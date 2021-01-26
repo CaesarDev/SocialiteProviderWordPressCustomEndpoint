@@ -1,8 +1,12 @@
 {
-    "name": "socialiteproviders/wordpress",
+    "name": "CaesarDev/SocialiteProviderWordPressCustomEndpoint",
     "description": "WordPress OAuth2 Provider for Laravel Socialite",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Caesar Dev",
+            "email": "info@caesardev.se"
+        },
         {
             "name": "Andy Wendt",
             "email": "andy@awendt.com"
@@ -15,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SocialiteProviders\\WordPress\\": ""
+            "CaesarDev\\SocialiteProviderWordPressCustomEndpoint\\": ""
         }
     }
 }

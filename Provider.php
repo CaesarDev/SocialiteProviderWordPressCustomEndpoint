@@ -1,24 +1,31 @@
 <?php
 
-namespace SocialiteProviders\WordPress;
+namespace CaesarDev\SocialiteProviderWordPressCustomEndpoint;
 
-use Illuminate\Support\Arr;
-use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
+use Laravel\Socialite\Two\ProviderInterface;
+use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 
-class Provider extends AbstractProvider
+class Provider extends AbstractProvider implements ProviderInterface
 {
     /**
      * Unique Provider Identifier.
      */
-    public const IDENTIFIER = 'WORDPRESS';
+    const IDENTIFIER = 'WORDPRESS';
+
+    /**
+     * The scopes being requested.
+     *
+     * @var array
+     */
+    protected $scopes = [];
 
     /**
      * {@inheritdoc}
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://public-api.wordpress.com/oauth2/authorize', $state);
+        return $this->buildAuthUrlFromBase(config('services.wordpress.api_top_endpoint') . 'oauth/authorize', $state);
     }
 
     /**
@@ -26,22 +33,20 @@ class Provider extends AbstractProvider
      */
     protected function getTokenUrl()
     {
-        return 'https://public-api.wordpress.com/oauth2/token';
+        return config('services.wordpress.api_top_endpoint') . 'oauth/token';
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token)
-    {
+    protected function getUserByToken($token){
+
+
         $response = $this->getHttpClient()->get(
-            'https://public-api.wordpress.com/rest/v1.1/me',
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer '.$token,
-                ],
-            ]
+            config('services.wordpress.api_top_endpoint') . 'wp-json/wp/v2/users/me?context=edit&access_token='.$token
         );
+
+
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -53,11 +58,10 @@ class Provider extends AbstractProvider
     {
         return (new User())->setRaw($user)->map(
             [
-                'id'       => $user['ID'],
+                'id' => $user['id'],
                 'nickname' => $user['username'],
-                'name'     => $user['display_name'],
-                'email'    => Arr::get($user, 'email'),
-                'avatar'   => $user['avatar_URL'],
+                'name' => $user['name'],
+                'email' => array_get($user, 'email'),
             ]
         );
     }
