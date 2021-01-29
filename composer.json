@@ -1,5 +1,5 @@
 {
-    "name": "CaesarDev/SocialiteProviderWordPressCustomEndpoint",
+    "name": "caesar-dev/socialite-provider-word-press-custom-endpoint",
     "description": "WordPress OAuth2 Provider for Laravel Socialite",
     "license": "MIT",
     "authors": [
